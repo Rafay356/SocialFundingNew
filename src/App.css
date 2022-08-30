@@ -1,0 +1,33 @@
+.body{
+  font-family: -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
+      'Helvetica Neue',
+      sans-serif;
+}
+/* .container-fluid {
+  display: flex;
+  /* background-color: aqua; 
+  height: 100px;
+  position: fixed;
+  width: 100%;
+  top:0px;
+  box-shadow:"0 0 2px lightgrey";
+  
+}
+/* h2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  width: fit-content;
+  height: 100%;
+  background-color: azure;
+  
+} */
