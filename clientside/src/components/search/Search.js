@@ -1,23 +1,31 @@
-import React, { useState } from 'react'
-import { NoQueryView } from './NoQueryView'
-import { SearchHeader } from '../search/serachHeader/SearchHeader'
-import { SearchResults } from "./SearchResult"
-import useTrendingGifSearch from "../../hooks/useTrendingGifSearch"
+import React, { useState } from "react";
 
+// import { NoQueryView } from "./NoQueryView";
+// import { SearchHeader } from "./serachHeader/SearchHeader";
+// import { SearchResults } from "./SearchResult";
+import useTrendingGifSearch from "../../hooks/useTrendingGifSearch";
+import { Causes } from "../card";
 
+// import Model from "../Model";
 export const Search = () => {
-    const [text, setText] = useState('');
-    const [order, setOrder] = useState('ASC');
-    const { loading, data, loadMore } = useTrendingGifSearch({ query: text });
-    return (
-        <>
+  //   const [text, setText] = useState("");
+  //   const [order, setOrder] = useState("ASC");
+  //   const { loading, data, loadMore } = useTrendingGifSearch({ query: text });
+  return (
+    <>
+      {/* <SearchHeader
+        setText={setText}
+        text={text}
+        order={order}
+        setOrder={setOrder}
+      /> */}
+      <Causes />
 
-            <SearchHeader setText={setText} text={text} order={order} setOrder={setOrder} />
-            {!data.length && <NoQueryView />}
-            <SearchResults onScrollEnd={loadMore} loading={loading} data={data} />
-        </>
-    )
-}
+      {/* {!data.length && <NoQueryView />} */}
+      {/* <SearchResults onScrollEnd={loadMore} loading={loading} data={data} /> */}
+    </>
+  );
+};
 
 // import { useState } from "react";
 // import { SearchHeader } from "./SearchHeader";
@@ -41,6 +49,3 @@ export const Search = () => {
 //         </>
 //     );
 // };
-
-
-

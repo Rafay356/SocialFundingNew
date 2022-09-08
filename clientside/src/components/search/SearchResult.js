@@ -1,5 +1,5 @@
 import CircularProgress from '@mui/material/CircularProgress';
-import { Gif } from '../../components/card/gif'
+import { Gif } from '../card/gif'
 import { Box, Container } from "@mui/material";
 import { useScrollToBottom } from "../../hooks/useScrollToBottom"
 

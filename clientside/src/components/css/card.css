@@ -1,0 +1,38 @@
+
+.donate-now{
+    font-weight: 200;
+    font-size:15px;
+    background: linear-gradient(to left, #f15b43 50%, teal 50%);
+    background-size: 200%;
+    background-position: right;
+    height:50px;
+    margin-top:30px;
+    cursor:pointer;
+    margin-right:20px
+    
+    /* background: red; */
+        /* default color */
+    
+        /* "to left" / "to right" - affects initial color */
+    /* background-color: linear-gradient(to right, #f15b43) left; */
+    /* background:linear-gradient(to left, salmon 50%, lightblue 50%) */
+}
+
+.donate-now:hover{
+    /* background-color: linear-gradient(right,#f15b43) left; */
+    background-position: left;
+    transition: 0.2s ease-in-out;
+}
+
+/* .LogoIcon{
+    margin-left:20px;
+    margin-top: 25px;
+   
+}
+
+.LogoIconButton{
+    height: 50px;
+    width:30px;
+    margin-top: 25px;
+    margin-left: 20px;
+} */
