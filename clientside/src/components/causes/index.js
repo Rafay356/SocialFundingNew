@@ -7,6 +7,12 @@ import GetRequest from "../Api/GetRequest";
 import "../css/card.css";
 import CauseCard from "../card/cause-card";
 
+const styleContainer = {
+  display: "flex",
+  flexWrap: "wrap",
+  marginBottom: "10px",
+};
+
 export const Causes = () => {
   const [allCauses, setAllCauses] = useState([]);
 
@@ -23,14 +29,9 @@ export const Causes = () => {
   }, []);
 
   return (
-    <Container
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-      }}
-    >
+    <Container style={styleContainer}>
       {allCauses.map((item, i) => {
+        console.log(item.img);
         return <CauseCard key={i} item={item} />;
       })}
     </Container>

@@ -16,6 +16,9 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+//static Images Folder
+app.use("/images", express.static(__dirname + "/images"));
+// app.use("./images", express.static("./clientside/public/images"));
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   next();

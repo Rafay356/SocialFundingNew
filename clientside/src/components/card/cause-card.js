@@ -30,6 +30,13 @@ const P = styled("p")({
   fontSize: "18px",
 });
 
+const styleCardDisplay = {
+  borderTopRightRadius: "20px",
+  borderTopLeftRadius: "20px",
+  flex: "0 1 calc(32% - 1em)",
+  margin: "10px",
+};
+
 const Column = styled("div")({
   float: "left",
   //   width: "33.33%",
@@ -38,15 +45,9 @@ const Column = styled("div")({
 
 const CauseCard = (props) => {
   // console.log(props);
-  const { name, img, description, goal, raised, toGo, avatar } = props.item;
+  const { username, img, description, goal, raised, avatar } = props.item;
   return (
-    <Box
-      sx={{
-        borderTopRightRadius: "20px",
-        borderTopLeftRadius: "20px",
-        flex: "0 1 calc(32% - 1em)",
-      }}
-    >
+    <Box style={styleCardDisplay}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[700] }} aria-label="recipe">
@@ -54,14 +55,19 @@ const CauseCard = (props) => {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label="settings" sx={{ marginTop: "12px" }}>
             <MoreVertIcon />
           </IconButton>
         }
-        title={<h3>{name}</h3>}
+        title={<h3>{username}</h3>}
       />
 
-      <CardMedia component="img" image={img} alt="Card Image" />
+      <CardMedia
+        height="194"
+        component="img"
+        image={`/images/${img}`}
+        alt="Card Image"
+      />
       <CardContent>
         <div className="single_cause_content">
           <div className="single_cause">
