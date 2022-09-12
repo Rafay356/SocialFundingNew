@@ -10,7 +10,10 @@ router.get("/posts", CausePostController.getallPosts);
 
 router.post(
   "/cause",
-  CausePostController.upload.single("img"),
+  CausePostController.upload.fields([
+    { name: "img", maxCount: 1 },
+    { name: "avatar", maxCount: 1 },
+  ]),
   CausePostController.newPost
 );
 

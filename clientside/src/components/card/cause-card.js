@@ -44,18 +44,26 @@ const Column = styled("div")({
 });
 
 const CauseCard = (props) => {
+  function iconButtonHandle() {
+    console.log("Hit It");
+  }
   // console.log(props);
-  const { username, img, description, goal, raised, avatar } = props.item;
+  const { username, img, description, goal, raised, avatar, title } =
+    props.item;
   return (
     <Box style={styleCardDisplay}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[700] }} aria-label="recipe">
-            <img src={avatar} width="40px" overflow="hidden" />
+          <Avatar src={`/images/${avatar}`} aria-label="recipe">
+            {/* <img src={`/images/${avatar}`} width="40px" overflow="hidden" /> */}
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings" sx={{ marginTop: "12px" }}>
+          <IconButton
+            aria-label="settings"
+            sx={{ marginTop: "12px", marginLeft: "8px" }}
+            onClick={iconButtonHandle}
+          >
             <MoreVertIcon />
           </IconButton>
         }
@@ -72,8 +80,8 @@ const CauseCard = (props) => {
         <div className="single_cause_content">
           <div className="single_cause">
             <h3>
+              <Link to="/cause/singlepost">{title}</Link>
               {/* <span className="sub_title">{item.category}</span> */}
-              {description}
             </h3>
           </div>
           <Row>

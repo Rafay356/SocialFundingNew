@@ -19,6 +19,7 @@ const Model = () => {
   const [category, setCategory] = useState("");
   const [img, setImg] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [goal, setGoal] = useState("");
   const [raised, setRaised] = useState("");
@@ -31,6 +32,7 @@ const Model = () => {
       formData.append("img", img);
       formData.append("username", username);
       formData.append("avatar", avatar);
+      formData.append("title", title);
       formData.append("description", desc);
       formData.append("goal", goal);
       formData.append("raised", raised);
@@ -73,6 +75,13 @@ const Model = () => {
     console.log(item);
     setImg(item);
   }
+
+  function avatarHandler(e) {
+    let item = e.target.files[0];
+    console.log(item);
+    setAvatar(item);
+  }
+
   return (
     <Grid>
       <Paper style={paperStyle}>
@@ -114,21 +123,18 @@ const Model = () => {
           <TextField
             style={textFieldStyle}
             fullWidth
-            label="Avatar Url"
-            type="text"
-            value={avatar}
-            onChange={(e) => setAvatar(e.target.value)}
+            type="file"
+            filename="avatar"
+            onChange={avatarHandler}
           />
 
           <TextField
             style={textFieldStyle}
             fullWidth
-            label="Description"
-            multiline
-            maxRows={4}
+            label="Title"
             type="text"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
 
           <TextField

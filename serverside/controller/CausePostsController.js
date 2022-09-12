@@ -16,11 +16,12 @@ const getallPosts = (req, res, next) => {
 const newPost = async (req, res) => {
   //create user using model
 
-  console.log(req.file);
+  console.log(req.files);
   const userReg = new modelCausePost.UserPost({
     username: req.body.username,
-    avatar: req.body.avatar,
-    img: req.file.filename,
+    title: req.body.title,
+    avatar: req.files.avatar[0].filename,
+    img: req.files.img[0].filename,
     category: req.body.category,
     description: req.body.description,
     goal: req.body.goal,
