@@ -29,8 +29,8 @@ const UserPost = sequelize.define(
   "userposts",
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
     username: {
@@ -50,7 +50,7 @@ const UserPost = sequelize.define(
       type: DataTypes.STRING,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
     },
 
     goal: {
@@ -65,7 +65,7 @@ const UserPost = sequelize.define(
   }
 );
 sequelize
-  .sync({ force: true })
+  .sync({ alter: true })
   .then((data) => {
     console.log("dataBase Table is Created ");
   })

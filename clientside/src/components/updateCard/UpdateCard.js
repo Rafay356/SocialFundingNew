@@ -1,10 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { styled } from "@mui/system";
+import { useLocation } from "react-router";
 import { Grid, Paper, TextField, Button } from "@mui/material";
 // import "./css/form.css";
 import axios from "axios";
-import Api from "./Api/axiosapi";
+// import Api from "./Api/axiosapi";
 
 const paperStyle = {
   padding: "30px 20px",
@@ -14,7 +15,7 @@ const paperStyle = {
 const headerStyle = { margin: 0 };
 const textFieldStyle = { marginTop: "10px" };
 
-const Model = () => {
+const UpdateCard = () => {
   const [username, setUserName] = useState("");
   const [category, setCategory] = useState("");
   const [img, setImg] = useState("");
@@ -24,13 +25,52 @@ const Model = () => {
   const [goal, setGoal] = useState("");
   const [raised, setRaised] = useState("");
 
-  async function getPost(e) {
+  const location = useLocation();
+  const path = location.pathname.split("/")[3];
+  console.log(path);
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    async function getPost() {
+      const res = await axios.get(
+        "http://127.0.0.1:8000/posts/singlepost/" + path
+      );
+      console.log("res", res.data.img);
+
+      setPost(res.data);
+      setUserName(res.data.username);
+      setCategory(res.data.category);
+      setTitle(res.data.title);
+      setDesc(res.data.description);
+      setGoal(res.data.goal);
+      setRaised(res.data.raised);
+      setImg(res.data.img);
+      setAvatar(res.data.avatar);
+    }
+    getPost();
+  }, [path]);
+
+  // const handleUpdate = async () => {
+  //   try {
+  //     return (
+  //       await axios.put("http://127.0.0.1:8000/cause/" + path),
+  //       {
+  //         data: { username: post.username },
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.log("try error", err);
+  //   }
+  // };
+
+  async function updatePost(e) {
     e.preventDefault();
 
     try {
       const formData = new FormData();
       formData.append("img", img);
       formData.append("username", username);
+      formData.append("category", category);
       formData.append("avatar", avatar);
       formData.append("title", title);
       formData.append("description", desc);
@@ -42,23 +82,16 @@ const Model = () => {
           "content-type": "multipart/form-data",
         },
       };
-      // const userPost = {
-      //   username: username,
-      //   img: img,
-      //   avatar: avatar,
-      //   category: category,
-      //   description: desc,
-      //   goal: goal,
-      //   raised: raised,
-      // };
       axios
-        .post("http://127.0.0.1:8000/cause", formData, config)
+        .put("http://127.0.0.1:8000/cause/" + path, formData, config)
         .then((data) => {
           console.log(data, "axios data");
+          return data;
         })
         .catch((err) => {
           console.log("apierror", err);
         });
+      window.location.reload("/");
     } catch (err) {
       console.log("try error", err);
     }
@@ -86,21 +119,20 @@ const Model = () => {
     <Grid>
       <Paper style={paperStyle}>
         <Grid align="center">
-          <h2 style={headerStyle}> Post Data</h2>
+          <h2 style={headerStyle}> Update Data</h2>
         </Grid>
         <form
-          onSubmit={getPost}
-          className="modelform"
+          onSubmit={updatePost}
+          className="updateform"
           encType="multipart/form-data"
         >
           <TextField
             style={textFieldStyle}
             label="Name"
             fullWidth
-            type="text"
             value={username}
+            type="text"
             onChange={usernameHandler}
-            required
           />
 
           <TextField
@@ -116,7 +148,7 @@ const Model = () => {
             fullWidth
             style={textFieldStyle}
             type="file"
-            filename="img"
+            filename={post.img}
             onChange={imgHandler}
           />
 
@@ -172,9 +204,6 @@ const Model = () => {
             variant="contained"
             // color="success"
             style={textFieldStyle}
-            onClick={() => {
-              console.log("data etered");
-            }}
           >
             Post
           </Button>
@@ -183,5 +212,4 @@ const Model = () => {
     </Grid>
   );
 };
-
-export default Model;
+export default UpdateCard;

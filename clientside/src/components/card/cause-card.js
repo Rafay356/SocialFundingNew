@@ -14,11 +14,13 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
-import { red } from "@mui/material/colors";
+// import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { causes } from "../mock-data/mock";
+// import { causes } from "../mock-data/mock";
 import "../css/card.css";
-import { PATH_PAGE } from "../routes/path";
+// import { PATH_PAGE } from "../routes/path";
+
+import EditModel from "../model/EditModel";
 
 const Row = styled("div")({
   display: "flex",
@@ -44,32 +46,27 @@ const Column = styled("div")({
 });
 
 const CauseCard = (props) => {
+  const [openEdit, setOpenEdit] = useState(false);
   function iconButtonHandle() {
-    console.log("Hit It");
+    openEdit ? setOpenEdit(false) : setOpenEdit(true);
   }
   // console.log(props);
-  const { username, img, description, goal, raised, avatar, title } =
-    props.item;
+  const { id, username, img, goal, raised, avatar, title } = props.item;
   return (
     <Box style={styleCardDisplay}>
-      <CardHeader
-        avatar={
-          <Avatar src={`/images/${avatar}`} aria-label="recipe">
+      <div className="cardHeader">
+        <div className="row">
+          <Avatar src={`/images/${avatar}`}>
             {/* <img src={`/images/${avatar}`} width="40px" overflow="hidden" /> */}
           </Avatar>
-        }
-        action={
-          <IconButton
-            aria-label="settings"
-            sx={{ marginTop: "12px", marginLeft: "8px" }}
-            onClick={iconButtonHandle}
-          >
+          <h3 className="cardUser">{username}</h3>
+        </div>
+        <Link to={`/cause/updatepost/${id}`}>
+          <IconButton sx={{ marginBottom: "5px" }}>
             <MoreVertIcon />
           </IconButton>
-        }
-        title={<h3>{username}</h3>}
-      />
-
+        </Link>
+      </div>
       <CardMedia
         height="194"
         component="img"
@@ -80,8 +77,9 @@ const CauseCard = (props) => {
         <div className="single_cause_content">
           <div className="single_cause">
             <h3>
-              <Link to="/cause/singlepost">{title}</Link>
-              {/* <span className="sub_title">{item.category}</span> */}
+              <Link to={`/cause/singlepost/${id}`}>
+                <span className="sub_title">{title}</span>
+              </Link>
             </h3>
           </div>
           <Row>

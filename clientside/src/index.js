@@ -5,7 +5,8 @@ import App from "./App";
 // import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Model from "./components/Model";
-import SinglePostCard from "./components/pages/SinglePostCard";
+import SinglePostCard from "./components/singlepost/SinglePostCard";
+import UpdateCard from "./components/updateCard/UpdateCard";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +15,9 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/cause/socialfunding" element={<Model />} />
-        <Route path="/cause/singlepost" element={<SinglePostCard />} />
+        {/* <Route path="/cause/singlepost" element={<SinglePostCard />} /> */}
+        <Route path="/cause/singlepost/:Id" element={<SinglePostCard />} />
+        <Route path="/cause/updatepost/:Id" element={<UpdateCard />} />
       </Routes>
     </Router>
   </React.StrictMode>

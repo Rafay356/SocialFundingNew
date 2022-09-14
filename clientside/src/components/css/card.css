@@ -24,6 +24,21 @@
     transition: 0.2s ease-in-out;
 }
 
+.cardHeader {
+    display:flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.cardUser{
+    /* margin-left:0px; */
+    /* margin-bottom: 4px; */
+    margin:8px 10px;
+
+}
+
+.row{
+    display: flex;
+}
 /* .LogoIcon{
     margin-left:20px;
     margin-top: 25px;

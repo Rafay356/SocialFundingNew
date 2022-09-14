@@ -12,11 +12,21 @@ const getallPosts = (req, res, next) => {
   });
 };
 
+//Get User By Id
+const getuserId = (req, res, next) => {
+  const id = req.params.id;
+  modelCausePost.UserPost.findByPk(id).then((data) => {
+    if (id <= data || id != data) {
+      res.status(200).json(data);
+    } else {
+      res.status(404).send({ message: "Id " + id + " Not Found" });
+    }
+  });
+};
+
 //creating new Post
 const newPost = async (req, res) => {
   //create user using model
-
-  console.log(req.files);
   const userReg = new modelCausePost.UserPost({
     username: req.body.username,
     title: req.body.title,
@@ -38,6 +48,65 @@ const newPost = async (req, res) => {
     res.status(400).json("server error", err);
   }
   //console.log("req user id",req.body.)
+};
+
+// Update a note identified by the noteId in the request
+// const postUpdate = async (req, res) => {
+//   try {
+//     const post = await modelCausePost.UserPost.findById(req.params.id);
+
+//     try {
+//       const updatedPost = await modelCausePost.UserPost.findByIdAndUpdate(
+//         req.params.id,
+//         {
+//           username: req.body.username,
+//           title: req.body.title,
+//           // avatar: req.files.avatar[0].filename,
+//           // img: req.files.img[0].filename,
+//           category: req.body.category,
+//           description: req.body.description,
+//           goal: req.body.goal,
+//           raised: req.body.raised,
+//         },
+//         { new: true }
+//       );
+//       res.status(200).json(updatedPost);
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// };
+
+//updating the User
+const postUpdate = async (req, res) => {
+  const un = {
+    username: req.body.username,
+    title: req.body.title,
+    avatar: req.files.avatar[0].filename,
+    img: req.files.img[0].filename,
+    category: req.body.category,
+    description: req.body.description,
+    goal: req.body.goal,
+    raised: req.body.raised,
+  };
+  const id = req.params.id;
+
+  const updateUser = await modelCausePost.UserPost.update(un, {
+    where: { id: id },
+  });
+  if (updateUser) {
+    return res.status(200).json({
+      id: id,
+      User_Updated: un,
+    });
+  } else {
+    res.status(400).json({
+      meg: "Not Found",
+    });
+  }
+  // console.log(updateUser);
 };
 
 // Image Controller
@@ -64,8 +133,23 @@ const upload = multer({
   // },
 });
 
+const Delete = async (req, res) => {
+  console.log(req.params.id);
+  const del = await modelCausePost.UserPost.findOne({
+    where: { id: req.params.id },
+  });
+  if (!del) return res.status(404).send("Not Found");
+  else {
+    await del.destroy();
+    res.status(200).send("Deleted");
+  }
+};
+
 module.exports = {
   newPost,
   getallPosts,
   upload,
+  getuserId,
+  Delete,
+  postUpdate,
 };

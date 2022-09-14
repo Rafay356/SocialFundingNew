@@ -30,9 +30,8 @@ export const Causes = () => {
 
   return (
     <Container style={styleContainer}>
-      {allCauses.map((item, i) => {
-        console.log(item.img);
-        return <CauseCard key={i} item={item} />;
+      {allCauses.map((item) => {
+        return <CauseCard key={item.id} item={item} />;
       })}
     </Container>
   );
