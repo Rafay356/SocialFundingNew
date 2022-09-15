@@ -6,6 +6,9 @@ const router = express.Router({ mergeParams: true });
 
 const CausePostController = require("../controller/CausePostsController");
 
+//mockdata api
+router.get("/examplecauses", CausePostController.getallMockData);
+
 router.get("/posts", CausePostController.getallPosts);
 
 router.get("/posts/singlepost/:id", CausePostController.getuserId);

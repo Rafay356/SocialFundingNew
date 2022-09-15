@@ -86,12 +86,12 @@ const UpdateCard = () => {
         .put("http://127.0.0.1:8000/cause/" + path, formData, config)
         .then((data) => {
           console.log(data, "axios data");
+          window.location.reload("/");
           return data;
         })
         .catch((err) => {
           console.log("apierror", err);
         });
-      window.location.reload("/");
     } catch (err) {
       console.log("try error", err);
     }
@@ -104,13 +104,13 @@ const UpdateCard = () => {
   }
 
   function imgHandler(e) {
-    let item = e.target.files[0];
+    let item = e.target.files;
     console.log(item);
     setImg(item);
   }
 
   function avatarHandler(e) {
-    let item = e.target.files[0];
+    let item = e.target.files;
     console.log(item);
     setAvatar(item);
   }

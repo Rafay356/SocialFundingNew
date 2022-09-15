@@ -11,6 +11,7 @@ const styleContainer = {
   display: "flex",
   flexWrap: "wrap",
   marginBottom: "10px",
+  marginTop: "-50px",
 };
 
 export const Causes = () => {

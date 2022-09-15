@@ -4,6 +4,12 @@ const modelCausePost = require("../models/CausePostModel");
 app.use(express.json());
 const multer = require("multer");
 const path = require("path");
+const mockData = require("../mockData/mockdata");
+
+//Mock Data controller
+const getallMockData = (req, res, next) => {
+  res.status(200).json(mockData);
+};
 
 //Get All User Data
 const getallPosts = (req, res, next) => {
@@ -152,4 +158,5 @@ module.exports = {
   getuserId,
   Delete,
   postUpdate,
+  getallMockData,
 };

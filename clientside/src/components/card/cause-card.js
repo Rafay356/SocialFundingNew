@@ -37,6 +37,7 @@ const styleCardDisplay = {
   borderTopLeftRadius: "20px",
   flex: "0 1 calc(32% - 1em)",
   margin: "10px",
+  boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
 };
 
 const Column = styled("div")({
@@ -46,10 +47,10 @@ const Column = styled("div")({
 });
 
 const CauseCard = (props) => {
-  const [openEdit, setOpenEdit] = useState(false);
-  function iconButtonHandle() {
-    openEdit ? setOpenEdit(false) : setOpenEdit(true);
-  }
+  // const [openEdit, setOpenEdit] = useState(false);
+  // function iconButtonHandle() {
+  //   openEdit ? setOpenEdit(false) : setOpenEdit(true);
+  // }
   // console.log(props);
   const { id, username, img, goal, raised, avatar, title } = props.item;
   return (
