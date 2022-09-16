@@ -47,10 +47,10 @@ const Column = styled("div")({
 });
 
 const CauseCard = (props) => {
-  // const [openEdit, setOpenEdit] = useState(false);
-  // function iconButtonHandle() {
-  //   openEdit ? setOpenEdit(false) : setOpenEdit(true);
-  // }
+  const [openEdit, setOpenEdit] = useState(false);
+  function iconButtonHandle() {
+    openEdit ? setOpenEdit(false) : setOpenEdit(true);
+  }
   // console.log(props);
   const { id, username, img, goal, raised, avatar, title } = props.item;
   return (
@@ -62,11 +62,12 @@ const CauseCard = (props) => {
           </Avatar>
           <h3 className="cardUser">{username}</h3>
         </div>
-        <Link to={`/cause/updatepost/${id}`}>
-          <IconButton sx={{ marginBottom: "5px" }}>
-            <MoreVertIcon />
-          </IconButton>
-        </Link>
+        {/* <Link to={`/cause/updatepost/${id}`}> */}
+        <IconButton sx={{ marginBottom: "5px" }} onClick={iconButtonHandle}>
+          <MoreVertIcon />
+        </IconButton>
+        {openEdit && <EditModel id={id} />}
+        {/* </Link> */}
       </div>
       <CardMedia
         height="194"
