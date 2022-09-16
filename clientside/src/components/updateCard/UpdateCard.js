@@ -1,6 +1,5 @@
 import React from "react";
-import { useRef, useState, useEffect } from "react";
-import { styled } from "@mui/system";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { Grid, Paper, TextField, Button } from "@mui/material";
 // import "./css/form.css";
@@ -104,13 +103,13 @@ const UpdateCard = () => {
   }
 
   function imgHandler(e) {
-    let item = e.target.files;
+    let item = e.target.files[0];
     console.log(item);
     setImg(item);
   }
 
   function avatarHandler(e) {
-    let item = e.target.files;
+    let item = e.target.files[0];
     console.log(item);
     setAvatar(item);
   }
