@@ -11,7 +11,8 @@ const SinglePageStyle = styled("div")({
   marginTop: "10px",
   marginBottom: "10px",
 });
-const Single = () => {
+const Single = (props) => {
+  console.log(props, "single props");
   return (
     <div>
       <Header />

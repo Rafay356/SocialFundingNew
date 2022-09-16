@@ -4,17 +4,20 @@ const app = express();
 app.use(express.json());
 const cors = require("cors");
 const causeRoute = require("./routes/CausePostRoutes");
+const userRoute = require("./routes/UserRoute");
 // const modelCausePost = require("./models/CausePost");
 // const modelCausePost = require("./models/CausePost");
 const Sequelize = require("sequelize");
 app.use(cors());
-app.use("/", causeRoute);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use("/", [causeRoute, userRoute]);
 
 //static Images Folder
 app.use("/images", express.static(__dirname + "/images"));
@@ -32,6 +35,7 @@ const sequelize = new Sequelize(database, username, password, {
     timestamps: false,
   },
 });
+
 sequelize
   .authenticate()
   .then(() => {

@@ -64,22 +64,6 @@ const UserPost = sequelize.define(
     freezeTableName: true,
   }
 );
-sequelize
-  .sync({ alter: true })
-  .then((data) => {
-    console.log("dataBase Table is Created ");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection Establish");
-  })
-  .catch((err) => {
-    console.log("authenticate e", JSON.stringify(err));
-  });
 
 const db = {};
 db.Sequelize = Sequelize;

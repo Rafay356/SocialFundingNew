@@ -24,6 +24,7 @@ const SinglePostCard = () => {
   const path = location.pathname.split("/")[3];
   const [post, setPost] = useState({});
   const [progress, setProgress] = useState(10);
+
   useEffect(() => {
     async function getPost() {
       const res = await axios.get(
