@@ -1,28 +1,40 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router";
-import { Header } from "../Header";
-import { Footer } from "../Footer";
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import "./singlePost.css";
+import { styled } from "@mui/material/styles";
+import LinearProgress from "@mui/material/LinearProgress";
+
+const Row = styled("div")({
+  display: "flex",
+  gap: "10rem",
+});
+
+const Column = styled("div")({
+  float: "left",
+});
+const P = styled("p")({
+  fontWeight: "500",
+  fontSize: "18px",
+});
 
 const SinglePostCard = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[3];
   const [post, setPost] = useState({});
-
+  const [progress, setProgress] = useState(10);
   useEffect(() => {
     async function getPost() {
       const res = await axios.get(
         "http://127.0.0.1:8000/posts/singlepost/" + path
       );
-      console.log("res", res.data);
       setPost(res.data);
     }
     getPost();
   }, [path]);
   return (
     <div className="singlePost">
-      <Header />
       <div className="singlePostWrapper">
         <h1 className="singlePostTitle">{post.title}</h1>
         <div className="singlePostInfo">
@@ -32,8 +44,47 @@ const SinglePostCard = () => {
           </span>
         </div>
         <p className="singlePostDesc">{post.description}</p>
+        <LinearProgress
+          variant="determinate"
+          color="inherit"
+          sx={{
+            width: "50%",
+            height: "20px",
+            marginBottom: "10px",
+            borderRadius: "20px",
+          }}
+          value={progress}
+        />
+        <Row>
+          <Column>
+            <span>
+              <i>
+                <LanguageOutlinedIcon sx={{ fontSize: 15 }} />
+              </i>
+              Goal
+            </span>
+            <P sx={{ color: "#f15b43" }}>${post.goal}</P>
+          </Column>
+          <Column>
+            <span>
+              <i>
+                <LanguageOutlinedIcon sx={{ fontSize: 15 }} />
+              </i>
+              Raised
+            </span>
+            <P sx={{ color: "#65c9bb" }}>${post.raised}</P>
+          </Column>
+          <Column>
+            <span>
+              <i>
+                <LanguageOutlinedIcon sx={{ fontSize: 15 }} />
+              </i>
+              ToGo
+            </span>
+            <P sx={{ color: "#ff9a39" }}>${post.goal - post.raised}</P>
+          </Column>
+        </Row>
       </div>
-      <Footer />
     </div>
   );
   // cause_details_area start
