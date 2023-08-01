@@ -1,9 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
-import { causes } from "../mock-data/mock";
 import { getUser } from "../Api/GetRequest";
-import GetRequest from "../Api/GetRequest";
 import "../css/card.css";
 import CauseCard from "../card/cause-card";
 
@@ -16,17 +14,12 @@ const styleContainer = {
 
 export const Causes = () => {
   const [allCauses, setAllCauses] = useState([]);
-
-  // useEffect(() => {
-  //   setApiGetData(GetRequest);
-  //   console.log(apigetData);
-  // }, []);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // console.log("hello");
-
+    if (loading) return setLoading(true);
     getUser().then((allCauses) => setAllCauses(allCauses));
-    // console.log("all", users);
+    setLoading(true);
   }, []);
 
   return (

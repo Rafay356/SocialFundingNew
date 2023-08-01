@@ -1,5 +1,5 @@
 import { GetApi } from "./axiosapi";
-// import { useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 export async function getUser() {
@@ -7,6 +7,7 @@ export async function getUser() {
     const response = await axios
       .get(`http://127.0.0.1:8000/posts`)
       .then((res) => {
+        // console.log(res);
         return res;
       })
       .catch((err) => {

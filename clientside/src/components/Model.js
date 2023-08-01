@@ -76,12 +76,6 @@ const Model = () => {
     setImg(item);
   }
 
-  function avatarHandler(e) {
-    let item = e.target.files[0];
-    console.log(item);
-    setAvatar(item);
-  }
-
   return (
     <Grid>
       <Paper style={paperStyle}>
@@ -95,7 +89,7 @@ const Model = () => {
         >
           <TextField
             style={textFieldStyle}
-            label="Name"
+            label="Username"
             fullWidth
             type="text"
             value={username}
@@ -118,14 +112,6 @@ const Model = () => {
             type="file"
             filename="img"
             onChange={imgHandler}
-          />
-
-          <TextField
-            style={textFieldStyle}
-            fullWidth
-            type="file"
-            filename="avatar"
-            onChange={avatarHandler}
           />
 
           <TextField

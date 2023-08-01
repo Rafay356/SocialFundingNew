@@ -1,16 +1,16 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import ReplyAllOutlinedIcon from "@mui/icons-material/ReplyAllOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivismOutlined";
-import { Box, Button, Container, Grid } from "@mui/material";
-import CardHeader from "@mui/material/CardHeader";
+import { Box, Button } from "@mui/material";
+// import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
@@ -51,31 +51,33 @@ const CauseCard = (props) => {
   function iconButtonHandle() {
     openEdit ? setOpenEdit(false) : setOpenEdit(true);
   }
-  // console.log(props);
-  const { id, username, img, goal, raised, avatar, title } = props.item;
+  const { id, img, goal, raised, title } = props.item;
+  const { username, profilepic, firstname, lastname } = props.item.user;
   return (
     <Box style={styleCardDisplay}>
       <div className="cardHeader">
         <div className="row">
-          <Avatar src={`/images/${avatar}`}>
+          <Avatar src={`/images/${profilepic}`}>
             {/* <img src={`/images/${avatar}`} width="40px" overflow="hidden" /> */}
           </Avatar>
-          <h3 className="cardUser">{username}</h3>
+          <h3 className="cardUser">{firstname}</h3>
         </div>
         {/* <Link to={`/cause/updatepost/${id}`}> */}
         <IconButton sx={{ marginBottom: "5px" }} onClick={iconButtonHandle}>
           <MoreVertIcon />
         </IconButton>
-        {openEdit && <EditModel id={id} />}
+
         {/* </Link> */}
       </div>
+      {openEdit && <EditModel id={id} />}
       <CardMedia
         height="194"
+        position="fixed"
         component="img"
         image={`/images/${img}`}
         alt="Card Image"
       />
-      <CardContent>
+      <CardContent sx={{ textDecoration: "none" }}>
         <div className="single_cause_content">
           <div className="single_cause">
             <h3>

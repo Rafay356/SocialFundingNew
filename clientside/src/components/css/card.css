@@ -35,6 +35,12 @@
     margin:8px 10px;
 
 }
+.h3{
+text-decoration: none;
+}
+.sub_title{
+    text-decoration: none;
+}
 
 .row{
     display: flex;

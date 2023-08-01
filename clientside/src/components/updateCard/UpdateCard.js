@@ -15,10 +15,10 @@ const headerStyle = { margin: 0 };
 const textFieldStyle = { marginTop: "10px" };
 
 const UpdateCard = () => {
-  const [username, setUserName] = useState("");
+  const [firstname, setFirstName] = useState("");
   const [category, setCategory] = useState("");
   const [img, setImg] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [profilepic, setProfilePic] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [goal, setGoal] = useState("");
@@ -34,17 +34,16 @@ const UpdateCard = () => {
       const res = await axios.get(
         "http://127.0.0.1:8000/posts/singlepost/" + path
       );
-      console.log("res", res.data.img);
 
       setPost(res.data);
-      setUserName(res.data.username);
+      setFirstName(res.data.user.firstname);
       setCategory(res.data.category);
       setTitle(res.data.title);
       setDesc(res.data.description);
       setGoal(res.data.goal);
       setRaised(res.data.raised);
       setImg(res.data.img);
-      setAvatar(res.data.avatar);
+      setProfilePic(res.data.user.profilepic);
     }
     getPost();
   }, [path]);
@@ -68,9 +67,9 @@ const UpdateCard = () => {
     try {
       const formData = new FormData();
       formData.append("img", img);
-      formData.append("username", username);
+      formData.append("firstname", firstname);
       formData.append("category", category);
-      formData.append("avatar", avatar);
+      formData.append("profilepic", profilepic);
       formData.append("title", title);
       formData.append("description", desc);
       formData.append("goal", goal);
@@ -84,7 +83,6 @@ const UpdateCard = () => {
       axios
         .put("http://127.0.0.1:8000/cause/" + path, formData, config)
         .then((data) => {
-          console.log(data, "axios data");
           window.location.reload("/");
           return data;
         })
@@ -99,7 +97,7 @@ const UpdateCard = () => {
   function usernameHandler(e) {
     let item = e.target.value;
     console.log(item);
-    setUserName(item);
+    setFirstName(item);
   }
 
   function imgHandler(e) {
@@ -111,7 +109,7 @@ const UpdateCard = () => {
   function avatarHandler(e) {
     let item = e.target.files[0];
     console.log(item);
-    setAvatar(item);
+    setProfilePic(item);
   }
 
   return (
@@ -129,7 +127,7 @@ const UpdateCard = () => {
             style={textFieldStyle}
             label="Name"
             fullWidth
-            value={username}
+            value={firstname}
             type="text"
             onChange={usernameHandler}
           />

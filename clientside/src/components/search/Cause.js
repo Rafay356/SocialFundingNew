@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-
+import { styled } from "@mui/system";
 // import { NoQueryView } from "./NoQueryView";
 // import { SearchHeader } from "./serachHeader/SearchHeader";
 // import { SearchResults } from "./SearchResult";
 import useTrendingGifSearch from "../../hooks/useTrendingGifSearch";
 import { Causes } from "../card";
 
+const Box = styled("div")({
+  // marginTop: "50px",
+});
 // import Model from "../Model";
-export const Search = () => {
+export const Cause = () => {
   //   const [text, setText] = useState("");
   //   const [order, setOrder] = useState("ASC");
   //   const { loading, data, loadMore } = useTrendingGifSearch({ query: text });
@@ -19,6 +22,7 @@ export const Search = () => {
         order={order}
         setOrder={setOrder}
       /> */}
+
       <Causes />
 
       {/* {!data.length && <NoQueryView />} */}

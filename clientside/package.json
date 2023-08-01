@@ -49,6 +49,8 @@
     ]
   },
   "devDependencies": {
+    "@iconify/icons-eva": "^1.2.3",
+    "@iconify/react": "^4.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "install": "^0.13.0"
   }

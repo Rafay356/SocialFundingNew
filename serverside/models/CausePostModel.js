@@ -1,4 +1,5 @@
 const dbConfig = require("../dbconfig/config");
+// const modelUser = require("./UserModel");
 const { Sequelize, DataTypes, Op } = require("sequelize");
 const { database, username, password, dialect } = dbConfig;
 const cors = require("cors");
@@ -33,14 +34,7 @@ const UserPost = sequelize.define(
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-    username: {
-      type: DataTypes.STRING,
-      // allowNull: false,
-    },
     img: {
-      type: DataTypes.STRING,
-    },
-    avatar: {
       type: DataTypes.STRING,
     },
     category: {
@@ -65,6 +59,14 @@ const UserPost = sequelize.define(
   }
 );
 
+sequelize
+  .sync({ force: true })
+  .then((data) => {
+    console.log("Post Table Created");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
