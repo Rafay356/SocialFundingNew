@@ -1,47 +1,100 @@
 import React from "react";
-import { Box, Button, Icon } from "@mui/material";
+import { Box, Button, Paper, Popper, Grow } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import Popper from "@mui/material/Popper";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { styled } from "@mui/material/styles";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 const EditModel = (props) => {
-  const { id } = props;
+  const { id, anchorEl, open, handleClose, onDeleteSuccess } = props;
+  const MenuButton = styled(Button)(({ theme }) => ({
+    justifyContent: "flex-start", // Aligns button content to the left
+    padding: "10px 15px", // Adds padding around button content
+    textTransform: "none", // Prevents text from being all uppercase
+    fontSize: "0.9rem", // Sets font size
+    fontWeight: 400, // Sets font weight
+    transition: "all 0.2s", // Smooth transition for hover effects
+    "&:hover": {
+      backgroundColor: "#f5f5f5", // Light gray background on hover
+    },
+  }));
   async function deleteHandler() {
-    const res = await axios.delete("http://127.0.0.1:8000/cause/" + id, {
-      headers: {
-        Authorization: "Bearer ",
-      },
-    });
-    return res;
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.delete(`http://127.0.0.1:8000/cause/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      handleClose();
+      if (onDeleteSuccess) {
+        onDeleteSuccess();
+      }
+      return res;
+    } catch (error) {
+      console.error("Delete error:", error);
+    }
   }
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "rgba(238, 238, 238)",
-        marginLeft: "201px",
-        position: "absolute",
-        zIndex: 500,
-        overFlow: "auto",
-      }}
-    >
-      <Link to={`/cause/updatepost/${id}`}>
-        <Button variant="text" size="small" startIcon={<EditIcon />}>
-          Edit
-        </Button>
-      </Link>
-      <Button
-        variant="text"
-        color="error"
-        size="small"
-        startIcon={<DeleteIcon />}
-        onClick={deleteHandler}
+    <ClickAwayListener onClickAway={handleClose}>
+      <Popper
+        open={open}
+        anchorEl={anchorEl}
+        placement="bottom-end"
+        transition
+        style={{ zIndex: 1000 }}
       >
-        Delete
-      </Button>
-    </Box>
+        {({ TransitionProps }) => (
+          <Grow {...TransitionProps}>
+            <Paper
+              sx={{
+                borderRadius: "8px",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+                overflow: "hidden",
+                mt: 0.5,
+                width: "150px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  bgcolor: "white",
+                }}
+              >
+                <Link
+                  to={`/cause/updatepost/${id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <MenuButton
+                    fullWidth
+                    sx={{
+                      color: "#075e54",
+                    }}
+                    startIcon={<EditIcon />}
+                  >
+                    Edit
+                  </MenuButton>
+                </Link>
+                <MenuButton
+                  fullWidth
+                  onClick={deleteHandler}
+                  sx={{
+                    color: "#dc3545",
+                  }}
+                  startIcon={<DeleteIcon />}
+                >
+                  Delete
+                </MenuButton>
+              </Box>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </ClickAwayListener>
   );
 };
 

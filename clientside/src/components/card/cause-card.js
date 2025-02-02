@@ -1,11 +1,13 @@
 import * as React from "react";
-import { useState } from "react";
+// import { useEffect } from "react";
+// import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import ReplyAllOutlinedIcon from "@mui/icons-material/ReplyAllOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivismOutlined";
-import { Box, Button } from "@mui/material";
+
+import { Box, Button, Typography } from "@mui/material";
 // import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -14,6 +16,7 @@ import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
+import LinearProgress from "@mui/material/LinearProgress";
 // import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 // import { causes } from "../mock-data/mock";
@@ -44,44 +47,120 @@ const Column = styled("div")({
   float: "left",
   //   width: "33.33%",
   //   padding: "10px 10px 0px 10px",
+  
 });
 
-const CauseCard = (props) => {
-  const [openEdit, setOpenEdit] = useState(false);
-  function iconButtonHandle() {
-    openEdit ? setOpenEdit(false) : setOpenEdit(true);
-  }
-  const { id, img, goal, raised, title } = props.item;
-  const { username, profilepic, firstname, lastname } = props.item.user;
+const CauseCard = ({ cause, onDelete }) => {
+  // console.log(props, "props");
+  // const [openEdit, setOpenEdit] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [progress, setProgress] = React.useState(0);
+  const open = Boolean(anchorEl);
+  const { _id, img, goal, raised, title } = cause;
+  const { username, profilepic, firstname } = cause.userId;
+
+  React.useEffect(() => {
+    if (cause && goal && raised) {
+      // Convert string values to numbers and calculate percentage
+      const goalAmount = parseFloat(goal);
+      const raisedAmount = parseFloat(raised);
+      const percentage = (raisedAmount / goalAmount) * 100;
+
+      // Ensure the percentage is between 0 and 100
+      const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
+
+      setProgress(clampedPercentage);
+    }
+  }, [goal, cause, raised]);
+
+  // Get current user's ID from localStorage
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  // console.log(currentUser, "currentUser");
+
+  // Check if the post belongs to current user
+  const isAuthorized = currentUser && username === currentUser.username;
+
+  const handleClick = (event) => {
+    event.stopPropagation();
+    open ? setAnchorEl(null) : setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box style={styleCardDisplay}>
       <div className="cardHeader">
         <div className="row">
-          <Avatar src={`/images/${profilepic}`}>
-            {/* <img src={`/images/${avatar}`} width="40px" overflow="hidden" /> */}
-          </Avatar>
+          <Avatar src={`/images/${profilepic}`} />
           <h3 className="cardUser">{firstname}</h3>
         </div>
         {/* <Link to={`/cause/updatepost/${id}`}> */}
-        <IconButton sx={{ marginBottom: "5px" }} onClick={iconButtonHandle}>
-          <MoreVertIcon />
-        </IconButton>
+        {isAuthorized && (
+          <IconButton
+            onClick={handleClick}
+            sx={{
+              float: "right",
+              color: "black",
+              width: "2.7rem",
+              "&:hover": {
+                backgroundColor: "teal",
+                color: "white",
+              },
+            }}
+          >
+            <MoreVertIcon />
+          </IconButton>
+        )}
 
         {/* </Link> */}
       </div>
-      {openEdit && <EditModel id={id} />}
+      {isAuthorized && (
+        <EditModel
+          id={_id}
+          anchorEl={anchorEl}
+          open={open}
+          handleClose={handleClose}
+          onDeleteSuccess={() => onDelete(_id)}
+        />
+      )}
       <CardMedia
         height="194"
         position="fixed"
         component="img"
-        image={`/images/${img}`}
+        image={`/images/${encodeURIComponent(img)}`}
         alt="Card Image"
       />
       <CardContent sx={{ textDecoration: "none" }}>
         <div className="single_cause_content">
           <div className="single_cause">
+            <Box display="flex" alignItems="center">
+              <Box width="100%" mr={1}>
+                <LinearProgress
+                  variant="determinate"
+                  color="primary"
+                  sx={{
+                    borderRadius: "20px",
+                    "& .MuiLinearProgress-bar": {
+                      borderRadius: "20px",
+                    },
+                  }}
+                  value={progress || 0}
+                />
+              </Box>
+              <Box>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  {`${Math.round(progress)}%`}
+                </Typography>
+              </Box>
+            </Box>
+
             <h3>
-              <Link to={`/cause/singlepost/${id}`}>
+              <Link
+                to={`/cause/singlepost/${_id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <span className="sub_title">{title}</span>
               </Link>
             </h3>

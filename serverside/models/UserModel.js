@@ -1,80 +1,43 @@
-const dbConfig = require("../dbconfig/config");
-const modelCausePost = require("./CausePostModel");
-const { Sequelize, DataTypes, Op } = require("sequelize");
-const { database, username, password, dialect } = dbConfig;
-const express = require("express");
-const app = express();
-const sequelize = new Sequelize(database, username, password, {
-  dialect: dialect,
-  define: {
-    timestamps: false,
-  },
-});
+const mongoose = require("mongoose");
 
-//take three arguemnt modelname column
-const Users = sequelize.define(
-  "users",
+const UserPostSchema = new mongoose.Schema(
   {
-    id: {
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4,
-      primaryKey: true,
-    },
     username: {
+      type: String,
       unique: true,
-      type: DataTypes.STRING,
-      allowNull: false,
+      required: true,
     },
     firstname: {
-      type: DataTypes.STRING,
+      type: String,
+      required: true,
     },
     lastname: {
-      type: DataTypes.STRING,
+      type: String,
     },
     password: {
-      type: DataTypes.STRING,
+      type: String,
+      required: true,
     },
     email: {
+      type: String,
       unique: true,
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmail: true,
-      },
+      required: true,
     },
     profilepic: {
-      type: DataTypes.STRING,
+      type: String,
     },
     token: {
-      type: DataTypes.STRING,
+      type: String,
     },
   },
   {
-    freezeTableName: true,
+    collection: "users",
+    timestamps: true,
   }
 );
+// Add index for faster lookups and unique constraints
+UserPostSchema.index({ email: 1 }, { unique: true });
+UserPostSchema.index({ username: 1 }, { unique: true });
+const Users = mongoose.models.Users || mongoose.model("Users", UserPostSchema);
 
-//Association with the post model
-//Relationship is one to many
-//Source is user and target is post
-//user hasmany post
-//each post belongs to one user
-Users.hasMany(modelCausePost.UserPost, {
-  foreignKey: { name: "userId", type: DataTypes.UUID },
-});
-modelCausePost.UserPost.belongsTo(Users);
-
-// sequelize
-//   .sync({ force: true })
-//   .then(() => {
-//     console.log("User table is Created");
-//     // return mdoelLink();
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
-const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-module.exports = { Users };
+module.exports = Users;

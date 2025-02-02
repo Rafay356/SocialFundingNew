@@ -2,9 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { styled } from "@mui/system";
 import { Grid, Paper, TextField, Button } from "@mui/material";
-// import "./css/form.css";
+import "./css/form.css";
 import axios from "axios";
-import Api from "./Api/axiosapi";
+import { useNavigate } from "react-router-dom";
+// import Api from "./Api/axiosapi";
 
 const paperStyle = {
   padding: "30px 20px",
@@ -14,7 +15,7 @@ const paperStyle = {
 const headerStyle = { margin: 0 };
 const textFieldStyle = { marginTop: "10px" };
 
-const Model = () => {
+const PostModel = () => {
   const [username, setUserName] = useState("");
   const [category, setCategory] = useState("");
   const [img, setImg] = useState("");
@@ -23,19 +24,21 @@ const Model = () => {
   const [desc, setDesc] = useState("");
   const [goal, setGoal] = useState("");
   const [raised, setRaised] = useState("");
+  const navigate = useNavigate();
 
   async function getPost(e) {
     e.preventDefault();
 
     try {
       const formData = new FormData();
-      formData.append("img", img);
       formData.append("username", username);
-      formData.append("avatar", avatar);
+      formData.append("category", category);
+      formData.append("img", img);
       formData.append("title", title);
       formData.append("description", desc);
       formData.append("goal", goal);
       formData.append("raised", raised);
+      formData.append("avatar", avatar);
 
       const config = {
         headers: {
@@ -55,9 +58,10 @@ const Model = () => {
         .post("http://127.0.0.1:8000/cause", formData, config)
         .then((data) => {
           console.log(data, "axios data");
+          navigate("/");
         })
-        .catch((err) => {
-          console.log("apierror", err);
+        .catch((err, data) => {
+          console.log("apierror", err, data);
         });
     } catch (err) {
       console.log("try error", err);
@@ -66,13 +70,13 @@ const Model = () => {
 
   function usernameHandler(e) {
     let item = e.target.value;
-    console.log(item);
+    // console.log(item);
     setUserName(item);
   }
 
   function imgHandler(e) {
     let item = e.target.files[0];
-    console.log(item);
+    console.log(item, "item");
     setImg(item);
   }
 
@@ -158,9 +162,9 @@ const Model = () => {
             variant="contained"
             // color="success"
             style={textFieldStyle}
-            onClick={() => {
-              console.log("data etered");
-            }}
+            // onClick={() => {
+            //   console.log("data etered");
+            // }}
           >
             Post
           </Button>
@@ -170,4 +174,4 @@ const Model = () => {
   );
 };
 
-export default Model;
+export default PostModel;

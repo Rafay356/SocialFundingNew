@@ -1,20 +1,12 @@
-import { GetApi } from "./axiosapi";
-import { useState } from "react";
 import axios from "axios";
 
 export async function getUser() {
   try {
-    const response = await axios
-      .get(`http://127.0.0.1:8000/posts`)
-      .then((res) => {
-        // console.log(res);
-        return res;
-      })
-      .catch((err) => {
-        console.log(err, "api er");
-      });
+    const response = await axios.get(`http://127.0.0.1:8000/posts`);
+    // console.log("API Response:", response);
     return response.data;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error; // Re-throw the error if you want the calling function to handle it
   }
 }

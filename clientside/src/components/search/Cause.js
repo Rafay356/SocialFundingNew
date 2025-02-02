@@ -1,32 +1,20 @@
-import React, { useState } from "react";
-import { styled } from "@mui/system";
-// import { NoQueryView } from "./NoQueryView";
-// import { SearchHeader } from "./serachHeader/SearchHeader";
-// import { SearchResults } from "./SearchResult";
-import useTrendingGifSearch from "../../hooks/useTrendingGifSearch";
-import { Causes } from "../card";
+import React from "react";
 
-const Box = styled("div")({
-  // marginTop: "50px",
-});
-// import Model from "../Model";
-export const Cause = () => {
-  //   const [text, setText] = useState("");
-  //   const [order, setOrder] = useState("ASC");
-  //   const { loading, data, loadMore } = useTrendingGifSearch({ query: text });
+import { Causes } from "../card";
+import Box from "@mui/material/Box";
+
+import SearchResults from "../../pages/SearchResults";
+
+export const Cause = ({ searchResults }) => {
   return (
     <>
-      {/* <SearchHeader
-        setText={setText}
-        text={text}
-        order={order}
-        setOrder={setOrder}
-      /> */}
-
-      <Causes />
-
-      {/* {!data.length && <NoQueryView />} */}
-      {/* <SearchResults onScrollEnd={loadMore} loading={loading} data={data} /> */}
+      {searchResults.length > 0 ? (
+        <Box sx={{ padding: "16px" }}>
+          <SearchResults results={searchResults} />
+        </Box>
+      ) : (
+        <Causes />
+      )}
     </>
   );
 };

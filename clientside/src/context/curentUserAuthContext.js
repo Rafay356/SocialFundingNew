@@ -16,7 +16,7 @@ export const CurrentUserAuthContextProvider = ({ children }) => {
     user: null,
   });
 
-  console.log("AuthContext state", state);
+  // console.log("AuthContext state", state);
 
   return (
     <CurrentUserAuthContext.Provider value={{ ...state, dispatch }}>

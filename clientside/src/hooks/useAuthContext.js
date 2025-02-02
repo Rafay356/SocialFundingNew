@@ -1,8 +1,8 @@
-import { CurrentUserAuthContextProvider } from "../context/curentUserAuthContext";
 import { useContext } from "react";
+import { CurrentUserAuthContext } from "../context/curentUserAuthContext";
 
 export const useAuthContext = () => {
-  const context = useContext(CurrentUserAuthContextProvider);
+  const context = useContext(CurrentUserAuthContext);
   if (!context) {
     throw Error("useAuth Error");
   }

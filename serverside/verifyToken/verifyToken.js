@@ -9,19 +9,33 @@ module.exports = function (req, res, next) {
   //   if (!token) return res.status(401).send("Access Denied");
   const authHeader =
     req.body.token || req.query.token || req.headers.authorization;
+  // console.log(authHeader, "headertoken");
+  if (!authHeader) {
+    return res.status(401).json("No authentication token provided");
+  }
 
   if (authHeader) {
+    // const token = authHeader.split(" ")[1];
     const token = authHeader.split(" ")[1];
-
+    if (!token) {
+      return res.status(401).json("Invalid token format");
+    }
+    // console.log("Token:", token);
+    // const decoded = jwt.decode(token);
+    // console.log("Decoded Token:", decoded);
     // if (!token) return res.status(401).send("Access Denied");
     // verify decoded and returns the decoded value
     //decode only decod the value not return the values
     jwt.verify(token, "secret key", (err, user) => {
       if (err) {
-        return res.status(403).json("Token is not valid!");
+        console.error("Token verification error:", err);
+        return res.status(403).json({
+          message: "Token is not valid",
+          error: err.message,
+        });
       }
-      req.user = user;
-      console.log("user", user);
+      req._id = user._id;
+      // console.log("user", user);
       next();
     });
   } else {

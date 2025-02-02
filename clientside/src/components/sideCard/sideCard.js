@@ -13,7 +13,7 @@ import facebookFill from "@iconify/icons-eva/facebook-fill";
 // import instagramFilled from "@iconify/icons-ant-design/instagram-filled";
 import { SpeedDial, SpeedDialAction } from "@mui/material";
 import axios from "axios";
-import { useLocation } from "react-router";
+import { useParams } from "react-router";
 
 const SOCIALS = [
   {
@@ -37,25 +37,28 @@ const SOCIALS = [
 ];
 
 export default function SideCardMedia() {
-  const location = useLocation();
-  const path = location.pathname.split("/")[3];
+  // const location = useLocation();
+  // const path = location.pathname.split("/")[3];
+  const { id } = useParams();
   const [post, setPost] = useState([]);
 
   useEffect(() => {
     async function getPost() {
-      console.log("getPost function called");
+      // console.log("getPost function called");
+      const token = localStorage.getItem("token");
       const res = await axios.get(
-        "http://127.0.0.1:8000/posts/singlepost/" + path,
+        `http://127.0.0.1:8000/posts/singlepost/${id}`,
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRiMjliMTZiLWQxOTItNDc2ZS1hZThmLWVkY2VjMWI2NzE0MyIsImVtYWlsIjoiZHVtbXkxM0BnbWFpbC5jb20iLCJpYXQiOjE2NjQ0NDA3NzEsImV4cCI6MTY2NDQ0Nzk3MX0.uHZTHUxLv-CV8qsuG3CPSD2sL7DskBCMv3eCREvzcAM`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       setPost(res.data);
     }
+    // console.log(post, "post");
     getPost();
-  }, [path]);
+  }, [id]);
 
   return (
     <>
@@ -65,13 +68,14 @@ export default function SideCardMedia() {
             component="img"
             alt={post.avatar}
             height="250"
-            image={`/images/${post.user.profilepic}`}
+            image={`/images/${post.userId.profilepic}`}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {post.user.username}
+              {post.userId.username}
             </Typography>
             <Typography variant="body2" color="text.secondary">
+              {post.description}
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s,

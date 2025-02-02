@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router";
+import { useParams } from "react-router";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import "./singlePost.css";
 import { styled } from "@mui/material/styles";
@@ -20,35 +20,73 @@ const P = styled("p")({
 });
 
 const SinglePostCard = () => {
-  const location = useLocation();
-  const path = location.pathname.split("/")[3];
+  // const location = useLocation();
+  const { id } = useParams();
+  // console.log(id, "Post id");
+  // const path = location.pathname.split("/")[2];
+  // console.log("Full pathname:", location.pathname);
   const [post, setPost] = useState({});
   const [progress, setProgress] = useState(0);
-
+  const [error, setError] = useState(null);
   useEffect(() => {
     async function getPost() {
-      const res = await axios.get(
-        "http://127.0.0.1:8000/posts/singlepost/" + path,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRiMjliMTZiLWQxOTItNDc2ZS1hZThmLWVkY2VjMWI2NzE0MyIsImVtYWlsIjoiZHVtbXkxM0BnbWFpbC5jb20iLCJpYXQiOjE2NjQ0NDA3NzEsImV4cCI6MTY2NDQ0Nzk3MX0.uHZTHUxLv-CV8qsuG3CPSD2sL7DskBCMv3eCREvzcAM`,
-          },
+      // console.log(token, "token");
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setError("No authentication token found");
+          return;
         }
-      );
-      const token = JSON.parse(localStorage.getItem(res));
-      console.log(token, "token");
-      setPost(res.data);
+        // console.log("Using token:", token);
+
+        const res = await axios.get(
+          `http://127.0.0.1:8000/posts/singlepost/${id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setPost(res.data);
+        console.log("Post data received:", res.data);
+      } catch (error) {
+        console.error("Error fetching post:", error.response || error);
+        setError(error.response?.data?.message || "Error fetching post");
+      }
     }
-    getPost();
-  }, [path]);
+    if (id) {
+      getPost();
+    }
+  }, [id]);
 
   useEffect(() => {
-    if (Object.values(post).length !== 0) {
-      const percantage = (post.raised / post.goal) * 100;
-      setProgress(percantage);
+    // if (Object.values(post).length !== 0) {
+    //   const percantage = (post.raised / post.goal) * 100;
+    //   setProgress(percantage);
+    // }
+    if (post && post.goal && post.raised) {
+      // Convert string values to numbers and calculate percentage
+      const goalAmount = parseFloat(post.goal);
+      const raisedAmount = parseFloat(post.raised);
+      const percentage = (raisedAmount / goalAmount) * 100;
+
+      // Ensure the percentage is between 0 and 100
+      const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
+
+      console.log("Progress calculation:", {
+        raised: raisedAmount,
+        goal: goalAmount,
+        percentage: clampedPercentage,
+      });
+
+      setProgress(clampedPercentage);
     }
   }, [post]);
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
   return (
     <div className="singlePost">
       {Object.values(post).length > 0 && (
@@ -57,20 +95,25 @@ const SinglePostCard = () => {
           <div className="singlePostInfo">
             <span className="singlePostAuthor">
               Author:
-              <b>{post.user.firstname}</b>
+              <b>{post.userId.firstname}</b>
             </span>
           </div>
-          <p className="singlePostDesc">{post.description}</p>
+          <div className="singlePostDesc">
+            <p>{post.description}</p>
+          </div>
           <LinearProgress
             variant="determinate"
-            color="success"
+            color="primary"
             sx={{
               width: "50% ",
               height: "20px",
               marginBottom: "10px",
               borderRadius: "20px",
+              "& .MuiLinearProgress-bar": {
+                borderRadius: "20px",
+              },
             }}
-            value={progress}
+            value={progress || 0}
           />
           <Row>
             <Column>
