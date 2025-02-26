@@ -32,6 +32,6 @@ router.post(
   UserController.createNewUser // Create a new user (signup)
 );
 router.post("/login", UserController.userValidation); // User login
-router.get("/user/:id", UserController.getUserById); // Get user by ID
+router.get("/user/:id", tokenVerify, UserController.getUserById); // Get user by ID
 
 module.exports = router;

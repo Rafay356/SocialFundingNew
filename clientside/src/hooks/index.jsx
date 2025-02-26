@@ -1,3 +1,3 @@
 // export * from "./useTrendingGifySearch";
 // export * from "./useScrollToBottom";
-export * from "./useAuthContext";
+export * from "./useAuthContext.jsx";

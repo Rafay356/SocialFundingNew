@@ -78,6 +78,7 @@ app.use("/", [causeRoute, userRoute]);
 // app.use("./images", express.static("./clientside/public/images"));
 // app.use("/images", express.static(__dirname + "/images"));
 // Serve static files from the "public/images" directory
+
 app.use(
   "/images",
   express.static(path.join(__dirname, "../clientside/public/images"))

@@ -260,7 +260,7 @@ const UpdateCard = () => {
           }
         );
         const data = res.data;
-        console.log(data, "data");
+        // console.log(data, "data");
         setFirstName(data.userId.firstname);
         setCategory(data.category);
         setTitle(data.title);

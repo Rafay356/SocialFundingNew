@@ -44,11 +44,11 @@ const Button = styled("button")({
 //   backgroundColor: "red",
 // });
 
-export const Header = ({ onSearch }) => {
+export const Header = () => {
   return (
     <>
       {/* <SubHeader /> */}
-      <Navbar onSearch={onSearch} />
+      <Navbar />
       <Component>
         <IconButton
           className="LogoIconButton"

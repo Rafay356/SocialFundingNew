@@ -47,13 +47,14 @@ router.get("/posts", CausePostController.getAllPosts);
 // Route to fetch a single post by ID with authentication
 router.get(
   "/posts/singlepost/:_id",
-  // tokenVerify,
+  tokenVerify,
   CausePostController.getPostById
 );
 
 // Route to create a new cause post
 router.post(
   "/cause",
+  tokenVerify,
   CausePostController.upload.single("img"),
   CausePostController.createPost
 );

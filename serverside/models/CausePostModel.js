@@ -78,7 +78,7 @@ const UserPostSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users", // References the User model
+      ref: "Users", // ref the User model
       required: true,
     },
     username: {

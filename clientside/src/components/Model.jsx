@@ -1,10 +1,11 @@
 import React from "react";
-import { useState } from "react";
-import { styled } from "@mui/system";
+import { useState, useEffect } from "react";
+// import { styled } from "@mui/system";
 import { Grid, Paper, TextField, Button } from "@mui/material";
 import "./css/form.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 // import Api from "./Api/axiosapi";
 
 const paperStyle = {
@@ -16,7 +17,11 @@ const headerStyle = { margin: 0 };
 const textFieldStyle = { marginTop: "10px" };
 
 const PostModel = () => {
-  const [username, setUserName] = useState("");
+  // const [username, setUserName] = useState("");
+  const [username] = useState(() => {
+    const currentUser = JSON.parse(localStorage.getItem("user")) || {};
+    return currentUser.username || "";
+  });
   const [category, setCategory] = useState("");
   const [img, setImg] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -24,6 +29,7 @@ const PostModel = () => {
   const [desc, setDesc] = useState("");
   const [goal, setGoal] = useState("");
   const [raised, setRaised] = useState("");
+
   const navigate = useNavigate();
 
   async function getPost(e) {
@@ -43,6 +49,7 @@ const PostModel = () => {
       const config = {
         headers: {
           "content-type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}` || "",
         },
       };
       // const userPost = {
@@ -68,15 +75,14 @@ const PostModel = () => {
     }
   }
 
-  function usernameHandler(e) {
-    let item = e.target.value;
-    // console.log(item);
-    setUserName(item);
-  }
+  // function usernameHandler(e) {
+  //   let item = e.target.value;
+  //   // console.log(item);
+  //   setUserName(item);
+  // }
 
   function imgHandler(e) {
     let item = e.target.files[0];
-    console.log(item, "item");
     setImg(item);
   }
 
@@ -97,7 +103,8 @@ const PostModel = () => {
             fullWidth
             type="text"
             value={username}
-            onChange={usernameHandler}
+            disabled
+            // onChange={usernameHandler}
             required
           />
 
@@ -115,6 +122,7 @@ const PostModel = () => {
             style={textFieldStyle}
             type="file"
             filename="img"
+            inputProps={{ accept: "image/*" }}
             onChange={imgHandler}
           />
 

@@ -47,7 +47,6 @@ const Column = styled("div")({
   float: "left",
   //   width: "33.33%",
   //   padding: "10px 10px 0px 10px",
-  
 });
 
 const CauseCard = ({ cause, onDelete }) => {
@@ -61,12 +60,10 @@ const CauseCard = ({ cause, onDelete }) => {
 
   React.useEffect(() => {
     if (cause && goal && raised) {
-      // Convert string values to numbers and calculate percentage
       const goalAmount = parseFloat(goal);
       const raisedAmount = parseFloat(raised);
       const percentage = (raisedAmount / goalAmount) * 100;
 
-      // Ensure the percentage is between 0 and 100
       const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
 
       setProgress(clampedPercentage);

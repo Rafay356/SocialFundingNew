@@ -2,12 +2,7 @@ import { useState, useContext } from "react";
 import { Grid, Paper, TextField, Button, Alert } from "@mui/material";
 import { CurrentUserAuthContext } from "../context/curentUserAuthContext";
 import { useNavigate } from "react-router-dom";
-
-// import Snackbar from "@mui/material/Snackbar";
-// import Slide from "@mui/material/Slide";
-// import "./css/form.css";
 import axios from "axios";
-// import Api from "./Api/axiosapi";
 
 const paperStyle = {
   padding: "30px 20px",
@@ -84,10 +79,7 @@ export const Login = () => {
         const { data } = error.response;
         setError(data);
       }
-
-      // Handle login error (you might want to show an error message to the user)
     }
-    console.log(error, "error");
   }
 
   function emailHandler(e) {
