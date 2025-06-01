@@ -318,7 +318,7 @@ const createPost = async (req, res) => {
 
       title: req.body.title,
       username: req.body.username,
-      img: req.file.filename,
+      img: req.file ? req.file.filename : null,
       category: req.body.category,
       description: req.body.description,
       goal: req.body.goal,
