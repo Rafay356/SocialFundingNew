@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import axios from "axios";
 import {
@@ -75,7 +74,6 @@ export const Signup = () => {
       const res = await axios.post("http://127.0.0.1:8000/user/signup", {
         userSignUp,
       });
-      console.log(res, "res");
 
       // if (name === "username") {
       //   // API call to check email availability
@@ -255,6 +253,7 @@ export const Signup = () => {
                 onChange={handleChange}
                 helperText={error.profilepic}
                 InputLabelProps={{ shrink: true }}
+                inputProps={{ accept: "image/*" }}
                 sx={(theme) => ({
                   "& .MuiFormHelperText-root": {
                     color: theme.palette.error.main,

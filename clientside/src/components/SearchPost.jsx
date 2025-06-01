@@ -3,13 +3,14 @@ import { IconButton, InputBase, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { SearchPostContext } from "../context/searchPosts";
+import { display, styled } from "@mui/system";
 
 const SearchPost = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate();
   const { query, setQuery, handleSearch } = useContext(SearchPostContext);
   // const [query, setQuery] = useState(searchParams.get("query") || "");
-  console.log(query, "quee");
+  // console.log(query, "quee");
   useEffect(() => {
     const timer = setTimeout(() => handleSearch(query), 300);
     return clearTimeout(timer);
@@ -36,14 +37,14 @@ const SearchPost = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        backgroundColor: "white",
-        borderRadius: "4px",
-        padding: "0 8px",
-      }}
+    <MainBox
+    // sx={{
+    //   display: "flex",
+    //   alignItems: "center",
+    //   backgroundColor: "white",
+    //   borderRadius: "4px",
+    //   padding: "0 8px",
+    // }}
     >
       <InputBase
         placeholder="Search by title..."
@@ -54,8 +55,16 @@ const SearchPost = () => {
       <IconButton onClick={handleSearchClick}>
         <SearchIcon />
       </IconButton>
-    </Box>
+    </MainBox>
   );
 };
+
+const MainBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: "white",
+  borderRadius: "4px",
+  padding: "0 8px",
+}));
 
 export default SearchPost;

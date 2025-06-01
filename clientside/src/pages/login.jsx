@@ -19,27 +19,6 @@ export const Login = () => {
   const [error, setError] = useState({});
   const navigate = useNavigate();
 
-  // async function getUser(e) {
-  //   e.preventDefault();
-
-  //   const userLogin = {
-  //     email: email,
-  //     password: password,
-  //   };
-  //   const result = await axios.post("http://127.0.0.1:8000/login", userLogin, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(userLogin),
-  //   });
-  //   if (result) {
-  //     localStorage.setItem("user", JSON.stringify(result));
-  //     navigate("/");
-  //   } else {
-  //     console.log(result);
-  //   }
-  // }
-
   async function getUser(e) {
     e.preventDefault();
 
@@ -65,7 +44,7 @@ export const Login = () => {
         localStorage.setItem("user", JSON.stringify(response.data.user));
 
         // Update auth context
-        dispatch({ type: "LOGIN", payload: response.data });
+        dispatch({ type: "LOGIN", payload: response.data.user });
 
         // Navigate to home page
         navigate("/");

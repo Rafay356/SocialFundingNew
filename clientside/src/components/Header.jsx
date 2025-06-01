@@ -7,9 +7,9 @@ import "./css/card.css";
 import { Navbar } from "../pages/navbar";
 // import { Routes, Route } from "react-router-dom";
 
-import { styled } from "@mui/system";
+import { display, styled } from "@mui/system";
 
-const Component = styled("div")({
+const Component = styled("div")(({ theme }) => ({
   backgroundColor: "white",
   boxShadow: "0 0 2px lightgrey",
   display: "flex",
@@ -17,8 +17,11 @@ const Component = styled("div")({
   width: "100%",
   height: "100px",
   zIndex: 999,
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
   // padding: "10px",
-});
+}));
 
 const Box = styled("h2")({
   // height: "100%",

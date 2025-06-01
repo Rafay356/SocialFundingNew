@@ -16,16 +16,17 @@ import axios from "axios";
 import { useParams } from "react-router";
 
 const SOCIALS = [
-  {
-    name: "Facebook",
-    icon: <Icon icon={facebookFill} width={20} height={20} color="#1877F2" />,
-  },
   // {
   //   name: "Instagram",
   //   icon: (
   //     <Icon icon={instagramFilled} width={20} height={20} color="#D7336D" />
   //   ),
   // },
+  {
+    name: "Facebook",
+    icon: <Icon icon={facebookFill} width={20} height={20} color="#1877F2" />,
+  },
+
   {
     name: "Linkedin",
     icon: <Icon icon={linkedinFill} width={20} height={20} color="#006097" />,

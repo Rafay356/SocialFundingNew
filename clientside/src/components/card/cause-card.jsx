@@ -1,6 +1,4 @@
-import * as React from "react";
-// import { useEffect } from "react";
-// import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import ReplyAllOutlinedIcon from "@mui/icons-material/ReplyAllOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
@@ -52,13 +50,13 @@ const Column = styled("div")({
 const CauseCard = ({ cause, onDelete }) => {
   // console.log(props, "props");
   // const [openEdit, setOpenEdit] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [progress, setProgress] = React.useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [progress, setProgress] = useState(0);
   const open = Boolean(anchorEl);
   const { _id, img, goal, raised, title } = cause;
   const { username, profilepic, firstname } = cause.userId;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (cause && goal && raised) {
       const goalAmount = parseFloat(goal);
       const raisedAmount = parseFloat(raised);

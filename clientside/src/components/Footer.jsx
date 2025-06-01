@@ -2,12 +2,12 @@
 
 import { styled } from "@mui/system";
 
-const Contanier = styled('div')({
-    width: "100%",
-    height: "200px",
-    backgroundColor: "#020206db"
-})
+const Contanier = styled("div")({
+  width: "100%",
+  height: "200px",
+  backgroundColor: "#020206db",
+  //   position: "sticky",
+});
 export const Footer = () => {
-    return <Contanier>
-    </Contanier>
-}
+  return <Contanier></Contanier>;
+};

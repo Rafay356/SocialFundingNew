@@ -10,7 +10,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { theme } from "./components/Theme/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { SearchProvider } from "./context/searchPosts";
 
 // import BasicPagination from "./components/Pagination";
 
@@ -22,44 +21,42 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div>
-        <SearchProvider>
-          <Header />
-          <Box>
-            <Routes>
-              <Route path="/" element={<Cause />} />
-              <Route path="/auth/signup" element={<Signup />} />
-              <Route path="/auth/signin" element={<Login />} />
-              {/*Protected Routes*/}
+        <Header />
+        <Box>
+          <Routes>
+            <Route path="/" element={<Cause />} />
+            <Route path="/auth/signup" element={<Signup />} />
+            <Route path="/auth/signin" element={<Login />} />
+            {/*Protected Routes*/}
 
-              <Route
-                path="/cause/createpost"
-                element={
-                  <ProtectedRoute>
-                    <PostModel />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/cause/singlepost/:id"
-                element={
-                  <ProtectedRoute>
-                    <Single />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/cause/updatepost/:_id"
-                element={
-                  <ProtectedRoute>
-                    <UpdateCard />
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
+            <Route
+              path="/cause/createpost"
+              element={
+                <ProtectedRoute>
+                  <PostModel />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cause/singlepost/:id"
+              element={
+                <ProtectedRoute>
+                  <Single />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cause/updatepost/:_id"
+              element={
+                <ProtectedRoute>
+                  <UpdateCard />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
 
-            <Footer />
-          </Box>
-        </SearchProvider>
+          <Footer />
+        </Box>
       </div>
     </ThemeProvider>
   );

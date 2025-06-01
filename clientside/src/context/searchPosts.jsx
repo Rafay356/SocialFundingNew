@@ -40,6 +40,7 @@ export const SearchProvider = ({ children }) => {
     searchResults,
     error,
     handleSearch,
+    setSearchResults,
   };
   return (
     <SearchPostContext.Provider value={value}>
