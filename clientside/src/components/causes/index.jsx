@@ -149,7 +149,9 @@ export const Causes = () => {
     <>
       <Contain>
         {causes.slice(start, end).map((cause) => (
-          <CauseCard key={cause._id} cause={cause} onDelete={handleDelete} />
+          <div style={{ display: "flex" }} key={cause._id}>
+            <CauseCard key={cause._id} cause={cause} onDelete={handleDelete} />
+          </div>
         ))}
       </Contain>
       <div style={pagination}>

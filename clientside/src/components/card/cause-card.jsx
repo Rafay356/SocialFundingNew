@@ -37,6 +37,7 @@ const styleCardDisplay = {
   borderTopRightRadius: "20px",
   borderTopLeftRadius: "20px",
   // flex: "0 1 calc(32% - 1em)",
+
   width: "100%",
   margin: "10px",
   boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
@@ -121,13 +122,19 @@ const CauseCard = ({ cause, onDelete }) => {
           onDeleteSuccess={() => onDelete(_id)}
         />
       )}
+
       <CardMedia
-        height="194"
-        position="fixed"
         component="img"
         image={`/images/${encodeURIComponent(img)}`}
         alt="Card Image"
+        sx={{
+          width: "100%",
+          aspectRatio: "16 / 9",
+          height: 200,
+          objectFit: "cover",
+        }}
       />
+
       <CardContent sx={{ textDecoration: "none" }}>
         <div className="single_cause_content">
           <div className="single_cause">
