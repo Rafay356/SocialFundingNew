@@ -36,7 +36,8 @@ const P = styled("p")({
 const styleCardDisplay = {
   borderTopRightRadius: "20px",
   borderTopLeftRadius: "20px",
-  flex: "0 1 calc(32% - 1em)",
+  // flex: "0 1 calc(32% - 1em)",
+  width: "100%",
   margin: "10px",
   boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
 };

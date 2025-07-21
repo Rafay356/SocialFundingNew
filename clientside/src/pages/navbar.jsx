@@ -11,23 +11,20 @@ import {
   ListItemText,
   Divider,
   ListItemButton,
+  Button,
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import SearchIcon from "@mui/icons-material/Search";
+
 import Box from "@mui/material/Box";
 import SearchPost from "../components/SearchPost";
 import { CurrentUserAuthContext } from "../context/curentUserAuthContext";
 
-// import SearchResults from "./SearchResults";
-// import { SearchHeader } from "../components/search/searchHeader/SearchHeader";
-
 import { useMenu } from "../hooks/useMenu";
 import { Avatar } from "@mui/material";
-// import axios from "axios";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -38,8 +35,6 @@ export function Navbar() {
   const toggleDrawer = (open) => () => {
     setDrawerOpen(open);
   };
-
-  // const [searchResults, setSearchResults] = useState([]);
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
@@ -59,6 +54,14 @@ export function Navbar() {
       <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box sx={{ width: 250 }} role="presentation">
           <List>
+            <ListItem
+              sx={{ display: "flex", justifyContent: "end" }}
+              onClick={toggleDrawer(false)}
+              onKeyDown={toggleDrawer(false)}
+            >
+              <CloseButton>x</CloseButton>
+            </ListItem>
+            <Divider />
             <ListItem>
               <SearchPost />
             </ListItem>
@@ -154,11 +157,7 @@ export function Navbar() {
             <MenuIcon />
           </IconButton>
           <SearchBox>
-            {/* <IconButton> */}
-            {/* <SearchHeader /> */}
             <SearchPost />
-
-            {/* </IconButton> */}
           </SearchBox>
           <NavLinks>
             {currentUser ? (
@@ -213,6 +212,13 @@ const Identifier = {
   flex: 1,
   marginLeft: "10px",
 };
+const CloseButton = styled(Button)(({ theme }) => ({
+  padding: "0",
+
+  fontSize: "24px",
+
+  color: theme.palette.primary.main,
+}));
 const NavLinks = styled("div")(({ theme }) => ({
   marginLeft: "10px",
   display: "flex",

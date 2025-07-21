@@ -1,13 +1,11 @@
 import React from "react";
-// import SubHeader from "./SubHeader";
-// import { Button } from "@mui/material";
+
 import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivismOutlined";
 import IconButton from "@mui/material/IconButton";
 import "./css/card.css";
 import { Navbar } from "../pages/navbar";
-// import { Routes, Route } from "react-router-dom";
 
-import { display, styled } from "@mui/system";
+import { styled } from "@mui/system";
 
 const Component = styled("div")(({ theme }) => ({
   backgroundColor: "white",
@@ -50,7 +48,6 @@ const Button = styled("button")({
 export const Header = () => {
   return (
     <>
-      {/* <SubHeader /> */}
       <Navbar />
       <Component>
         <IconButton
@@ -73,9 +70,6 @@ export const Header = () => {
           Make Donation
         </Button>
       </Component>
-      {/* <Routes>
-        <Route path="/cause" element={<Model />} />
-      </Routes> */}
     </>
   );
 };

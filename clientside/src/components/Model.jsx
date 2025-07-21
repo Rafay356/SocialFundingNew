@@ -1,6 +1,5 @@
-import React from "react";
-import { useState, useEffect } from "react";
-// import { styled } from "@mui/system";
+import { useState } from "react";
+
 import {
   Grid,
   TextField,
@@ -91,11 +90,11 @@ const PostModel = () => {
   //   setUserName(item);
   // }
 
-  function imgHandler(e) {
-    let item = e.target.files[0];
+  // function imgHandler(e) {
+  //   let item = e.target.files[0];
 
-    setImg(item);
-  }
+  //   setImg(item);
+  // }
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
